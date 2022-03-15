@@ -1,4 +1,6 @@
 import os
+import os.path
+from datetime import datetime
 from wsgiref.util import request_uri
 from flask import Flask, request, render_template, jsonify
 from werkzeug.utils import secure_filename
@@ -32,10 +34,15 @@ def success():
 def test():
     data = request.json
     print(data)
-    file = open('datafile.json', 'w')
-    file.write(json.dumps(data))
-    file.close()
-    return jsonify({'message':'test', 'data':data})
+    current_time = datetime.datetime.now()
+    microsecond = current_time.microsecond
+    filename = 'datafile'+str(microsecond)+'.json'
+    file_exists = os.path.exists(filename)
+    if not file_exists:
+        file = open(filename', 'w')
+        file.write(json.dumps(data))
+        file.close()
+    return jsonify(data)
 
 
 
