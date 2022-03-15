@@ -39,7 +39,7 @@ def test():
     filename = 'datafile'+str(microsecond)+'.json'
     file_exists = os.path.exists(filename)
     if not file_exists:
-        file = open(filename', 'w')
+        file = open(filename, 'w')
         file.write(json.dumps(data))
         file.close()
     return jsonify(data)
