@@ -34,7 +34,7 @@ def success():
 def test():
     data = request.json
     print(data)
-    current_time = datetime.datetime.now()
+    current_time = datetime.now()
     microsecond = current_time.microsecond
     filename = 'datafile'+str(microsecond)+'.json'
     file_exists = os.path.exists(filename)
