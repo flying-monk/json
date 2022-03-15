@@ -30,8 +30,8 @@ def success():
         content = file.read()
     return render_template("success.html", name=upload_file.filename)
 
-@app.route('/test', methods=['GET'])
-def test():
+@app.route('/upload', methods=['GET'])
+def upload():
     data = request.json
     print(data)
     current_time = datetime.now()
