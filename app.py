@@ -17,7 +17,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
-def upload():
+def upload_():
     return render_template("upload.html")
 
 @app.route('/success', methods=['GET', 'POST']) 
