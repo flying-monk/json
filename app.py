@@ -45,6 +45,21 @@ def upload():
     return jsonify(data)
 
 
+@app.route('/upload/mission', methods=['POST'])
+def uploadmk():
+    data = request.json
+    #print(data)
+    print(str(data['data']))
+    current_time = datetime.now()
+    microsecond = current_time.microsecond
+    filename = 'datafile'+str(microsecond)+'.csv'
+    file_exists = os.path.exists(filename)
+    if not file_exists:
+        file = open(filename, 'w')
+        file.write(str(data['data']))
+        file.close()
+    return jsonify(data)
+
 
 if __name__ == "__main__":
     app.run(port=2727, debug=True)
