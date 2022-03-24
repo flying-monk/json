@@ -4,6 +4,7 @@ from datetime import datetime
 from wsgiref.util import request_uri
 from flask import Flask, request, render_template, jsonify
 from werkzeug.utils import secure_filename
+from dronekit import connect
 import json
 
 UPLOAD_FOLDER = 'file/'
@@ -59,6 +60,47 @@ def uploadmk():
         file.write(str(data['data']))
         file.close()
     return jsonify(data)
+
+@app.route("/data", methods=['GET', 'POST'])
+def index_data():
+    # vehicle = connect('127.0.0.1:14550', wait_ready=True)
+    vehicle = connect('/dev/ttyACM0', wait_ready=True, baud=57600)
+
+    mode = vehicle.mode.name
+    global_location = vehicle.location.global_frame
+    global_location_relative_altitude = vehicle.location.global_relative_frame
+    local_location = vehicle.location.local_frame
+    vehicle_altitude = vehicle.attitude
+    vehicle_velocity = vehicle.velocity
+    vehicle_gps_0 = vehicle.gps_0
+    ground_speed = vehicle.groundspeed
+    air_speed = vehicle.airspeed
+    battery = vehicle.battery
+    heart_beat = vehicle.last_heartbeat
+    range_finder = vehicle.rangefinder
+    range_finder_distance = vehicle.rangefinder.distance
+    range_finder_voltage = vehicle.rangefinder.voltage
+    heading = vehicle.heading
+    arm_status = vehicle.is_armable
+    system_status = vehicle.system_status.state
+    print(mode)
+
+    
+    return jsonify({'Mode':mode,
+                    'Global Location':{'Latitude':global_location.lat ,'Longitude':global_location.lon ,'Altitude':global_location.alt},
+                    'Global Location Relative Altitude':{'Relative Latitude':global_location_relative_altitude.lat, 'Relative Longitude': global_location_relative_altitude.lon, 'Relative Altitude':global_location_relative_altitude.alt},
+                    'Local Location': {'North':local_location.north, 'East':local_location.east, 'Down':local_location.down},
+                    'Vehicle Altitude': {'Pitch':vehicle_altitude.pitch, 'Yaw':vehicle_altitude.yaw, 'Roll':vehicle_altitude.roll},
+                    'Vehicle Velocity': vehicle_velocity,
+                    'GPS':{'Fix':vehicle_gps_0.fix_type, 'Satellites': vehicle_gps_0.satellites_visible},
+                    'Ground Speed':ground_speed,
+                    'Air Speed':air_speed,
+                    'Battery':{'Voltage':battery.voltage, 'Current':battery.current, 'Percentage':battery.level},
+                    'HeartBeat':heart_beat,
+                    'RangeFinder':{'Distance':range_finder.distance, 'Voltage':range_finder.voltage},
+                    'Heading':heading,
+                    'Arm Status':arm_status,
+                    'System Status': system_status})
 
 
 if __name__ == "__main__":
