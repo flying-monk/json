@@ -86,21 +86,21 @@ def index_data():
     print(mode)
 
     
-    return jsonify({'Mode':mode,
-                    'Global Location':{'Latitude':global_location.lat ,'Longitude':global_location.lon ,'Altitude':global_location.alt},
-                    'Global Location Relative Altitude':{'Relative Latitude':global_location_relative_altitude.lat, 'Relative Longitude': global_location_relative_altitude.lon, 'Relative Altitude':global_location_relative_altitude.alt},
-                    'Local Location': {'North':local_location.north, 'East':local_location.east, 'Down':local_location.down},
-                    'Vehicle Altitude': {'Pitch':vehicle_altitude.pitch, 'Yaw':vehicle_altitude.yaw, 'Roll':vehicle_altitude.roll},
-                    'Vehicle Velocity': vehicle_velocity,
-                    'GPS':{'Fix':vehicle_gps_0.fix_type, 'Satellites': vehicle_gps_0.satellites_visible},
-                    'Ground Speed':ground_speed,
-                    'Air Speed':air_speed,
-                    'Battery':{'Voltage':battery.voltage, 'Current':battery.current, 'Percentage':battery.level},
-                    'HeartBeat':heart_beat,
-                    'RangeFinder':{'Distance':range_finder.distance, 'Voltage':range_finder.voltage},
-                    'Heading':heading,
-                    'Arm Status':arm_status,
-                    'System Status': system_status})
+    return jsonify({'mode':mode,
+                    'globalLocation':{'latitude':global_location.lat ,'longitude':global_location.lon ,'altitude':global_location.alt},
+                    'globalLocationRelativeAltitude':{'relativeLatitude':global_location_relative_altitude.lat, 'relativeLongitude': global_location_relative_altitude.lon, 'relativeAltitude':global_location_relative_altitude.alt},
+                    'localLocation': {'north':local_location.north, 'east':local_location.east, 'down':local_location.down},
+                    'vehicleAltitude': {'pitch':vehicle_altitude.pitch, 'yaw':vehicle_altitude.yaw, 'roll':vehicle_altitude.roll},
+                    'vehicleVelocity': vehicle_velocity,
+                    'GPS':{'fix':vehicle_gps_0.fix_type, 'satellites': vehicle_gps_0.satellites_visible},
+                    'groundSpeed':ground_speed,
+                    'airSpeed':air_speed,
+                    'battery':{'voltage':battery.voltage, 'current':battery.current, 'percentage':battery.level},
+                    'heartBeat':heart_beat,
+                    'rangeFinder':{'distance':range_finder.distance, 'voltage':range_finder.voltage},
+                    'heading':heading,
+                    'armStatus':arm_status,
+                    'systemStatus': system_status})
 
 
 if __name__ == "__main__":
