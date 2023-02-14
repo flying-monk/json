@@ -4,6 +4,7 @@ from datetime import datetime
 from wsgiref.util import request_uri
 from flask import Flask, request, render_template, jsonify
 from werkzeug.utils import secure_filename
+from dronekit import connect
 import json
 
 UPLOAD_FOLDER = 'file/'
@@ -62,7 +63,12 @@ def uploadmk():
 
 @app.route("/data", methods=['GET', 'POST'])
 def index_data():
+<<<<<<< HEAD
     vehicle = connect('127.0.0.1:14550', wait_ready=True)
+=======
+    # vehicle = connect('127.0.0.1:14550', wait_ready=True)
+    vehicle = connect('/dev/ttyACM0', wait_ready=True, baud=57600)
+>>>>>>> adc09f2bb4878bd57a99baba0b5d4db1e310aba0
 
     mode = vehicle.mode.name
     global_location = vehicle.location.global_frame
@@ -81,8 +87,29 @@ def index_data():
     heading = vehicle.heading
     arm_status = vehicle.is_armable
     system_status = vehicle.system_status.state
+<<<<<<< HEAD
     
     return jsonify({'first':mode})
+=======
+    print(mode)
+
+    
+    return jsonify({'mode':mode,
+                    'globalLocation':{'latitude':global_location.lat ,'longitude':global_location.lon ,'altitude':global_location.alt},
+                    'globalLocationRelativeAltitude':{'relativeLatitude':global_location_relative_altitude.lat, 'relativeLongitude': global_location_relative_altitude.lon, 'relativeAltitude':global_location_relative_altitude.alt},
+                    'localLocation': {'north':local_location.north, 'east':local_location.east, 'down':local_location.down},
+                    'vehicleAltitude': {'pitch':vehicle_altitude.pitch, 'yaw':vehicle_altitude.yaw, 'roll':vehicle_altitude.roll},
+                    'vehicleVelocity': vehicle_velocity,
+                    'GPS':{'fix':vehicle_gps_0.fix_type, 'satellites': vehicle_gps_0.satellites_visible},
+                    'groundSpeed':ground_speed,
+                    'airSpeed':air_speed,
+                    'battery':{'voltage':battery.voltage, 'current':battery.current, 'percentage':battery.level},
+                    'heartBeat':heart_beat,
+                    'rangeFinder':{'distance':range_finder.distance, 'voltage':range_finder.voltage},
+                    'heading':heading,
+                    'armStatus':arm_status,
+                    'systemStatus': system_status})
+>>>>>>> adc09f2bb4878bd57a99baba0b5d4db1e310aba0
 
 
 if __name__ == "__main__":
