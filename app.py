@@ -60,6 +60,30 @@ def uploadmk():
         file.close()
     return jsonify(data)
 
+@app.route("/data", methods=['GET', 'POST'])
+def index_data():
+    vehicle = connect('127.0.0.1:14550', wait_ready=True)
+
+    mode = vehicle.mode.name
+    global_location = vehicle.location.global_frame
+    global_location_relative_altitude = vehicle.location.global_relative_frame
+    local_location = vehicle.location.local_frame
+    vehicle_altitude = vehicle.attitude
+    vehicle_velocity = vehicle.velocity
+    vehicle_gps_0 = vehicle.gps_0
+    ground_speed = vehicle.groundspeed
+    air_speed = vehicle.airspeed
+    battery = vehicle.battery
+    heart_beat = vehicle.last_heartbeat
+    range_finder = vehicle.rangefinder
+    range_finder_distance = vehicle.rangefinder.distance
+    range_finder_voltage = vehicle.rangefinder.voltage
+    heading = vehicle.heading
+    arm_status = vehicle.is_armable
+    system_status = vehicle.system_status.state
+    
+    return jsonify({'first':mode})
+
 
 if __name__ == "__main__":
     app.run(port=2727, debug=True)
